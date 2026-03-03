@@ -1,0 +1,26 @@
+name: Build & Push
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.REG_ENDPOINT }}
+          username: ${{ secrets.REG_USER }}
+          password: ${{ secrets.REG_TOKEN }}
+
+      - name: Build & Push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.REG_ENDPOINT }}/${{ github.repository }}:latest
