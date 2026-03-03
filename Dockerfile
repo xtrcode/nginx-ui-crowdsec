@@ -3,7 +3,7 @@ FROM docker.io/uozi/nginx-ui:latest AS builder
 RUN apt-get update && apt-get install -y \
     wget git build-essential \
     libpcre2-dev zlib1g-dev libssl-dev \
-    libluajit-5.1-dev luajit sudo
+    libluajit-5.1-dev luajit
 
 RUN NGINX_VERSION=$(nginx -v 2>&1 | grep -o '[0-9\.]*') && \
     wget http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz && \
